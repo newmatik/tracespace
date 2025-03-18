@@ -1,7 +1,7 @@
 'use strict'
 
 const path = require('path')
-const merge = require('webpack-merge')
+const {merge} = require('webpack-merge')
 
 const {browserScriptConfig} = require('@tracespace/config/webpack')
 

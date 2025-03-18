@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
-const merge = require('webpack-merge')
+const {merge} = require('webpack-merge')
 
 const DEV_MODE = process.env.NODE_ENV !== 'production'
 const ANALYZER = Boolean(process.env.ANALYZER)
