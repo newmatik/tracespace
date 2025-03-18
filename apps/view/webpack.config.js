@@ -1,11 +1,11 @@
 'use strict'
 
 const path = require('path')
-const {EnvironmentPlugin} = require('webpack')
+const {EnvironmentPlugin, ProvidePlugin} = require('webpack')
 const FileManagerPlugin = require('filemanager-webpack-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const merge = require('webpack-merge')
+const {merge} = require('webpack-merge')
 
 const pkg = require('./package.json')
 const {
@@ -71,12 +71,16 @@ module.exports = merge(baseConfig(__dirname), {
     ],
   },
   plugins: [
+    new ProvidePlugin({
+      React: 'react',
+      ReactDOM: 'react-dom',
+    }),
     new EnvironmentPlugin({
       MIXPANEL_ID: null,
-      PKG_VERSION: pkg.version,
-      PKG_REPOSITORY_URL: pkg.repository.url,
-      PKG_AUTHOR_NAME: pkg.author.name,
-      PKG_AUTHOR_URL: pkg.author.url,
+      PKG_VERSION: pkg.version || '1.0.0',
+      PKG_REPOSITORY_URL: pkg.repository?.url || '',
+      PKG_AUTHOR_NAME: pkg.author?.name || 'Newmatik',
+      PKG_AUTHOR_URL: pkg.author?.url || '',
     }),
     new FileManagerPlugin({
       onStart: {mkdir: [OUT_PATH]},
@@ -84,9 +88,9 @@ module.exports = merge(baseConfig(__dirname), {
     }),
     new HtmlPlugin({
       template: path.join(__dirname, 'src/template'),
-      title: pkg.productName,
-      author: pkg.author.name,
-      description: pkg.description,
+      title: pkg.productName || pkg.name,
+      author: pkg.author?.name || 'Newmatik',
+      description: pkg.description || '',
     }),
   ],
 })
