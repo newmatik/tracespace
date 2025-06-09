@@ -135,7 +135,7 @@ ctx.onmessage = function receive(event) {
         boardToStackups(board)
           .then(stackups => {
             const [selfContained] = stackups
-            return stackupToZipBlob(selfContained)
+            return stackupToZipBlob(selfContained, board)
           })
           .then(blob => ctx.postMessage(boardPackaged(id, board.name, blob)))
       )

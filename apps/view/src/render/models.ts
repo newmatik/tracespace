@@ -78,9 +78,15 @@ export async function boardToStackups(
   })
 }
 
-export async function stackupToZipBlob(stackup: Stackup): Promise<Blob> {
+export async function stackupToZipBlob(stackup: Stackup, board: Board): Promise<Blob> {
+  let fileName = ''
+  if (board.name) {
+    fileName = board.name
+  } else {
+    fileName = DEFAULT_BOARD_NAME
+  }
   const files = stackup.layers
-    .filter(layer => layer.converter.layer.length > 0)
+    .filter((layer) => layer.converter.layer.length > 0)
     .reduce(
       (result, layer) =>
         result.concat({
@@ -88,8 +94,8 @@ export async function stackupToZipBlob(stackup: Stackup): Promise<Blob> {
           contents: render(layer.converter, layer.options.id),
         }),
       [
-        {name: 'top.svg', contents: stackup.top.svg},
-        {name: 'bottom.svg', contents: stackup.bottom.svg},
+        {name: `${fileName}_PCB-Image-TOP.svg`, contents: stackup.top.svg},
+        {name: `${fileName}_PCB-Image-BOT.svg`, contents: stackup.bottom.svg},
       ]
     )
 
