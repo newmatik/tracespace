@@ -1,3 +1,17 @@
+# Dependencies
+node_modules
+node_modules*/
+.pnpm-store
+.yarn
+.bun
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
 node_modules
 coverage
 .nyc_output
