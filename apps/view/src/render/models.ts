@@ -77,8 +77,10 @@ export async function boardToStackups(
     return Promise.all([selfContainedStackup, sharedStackup])
   })
 }
-
-export async function stackupToZipBlob(stackup: Stackup, board: Board): Promise<Blob> {
+  export async function stackupToZipBlob(
+    stackup: Stackup,
+    board: Board
+  ): Promise<Blob> {
   let fileName = ''
   if (board.name) {
     fileName = board.name
@@ -86,7 +88,7 @@ export async function stackupToZipBlob(stackup: Stackup, board: Board): Promise<
     fileName = DEFAULT_BOARD_NAME
   }
   const files = stackup.layers
-    .filter((layer) => layer.converter.layer.length > 0)
+  .filter(layer => layer.converter.layer.length > 0)
     .reduce(
       (result, layer) =>
         result.concat({
