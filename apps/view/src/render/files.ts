@@ -77,12 +77,20 @@ function fileReader(file: File): FileStream {
 
 async function zipReader(file: Blob): PromiseArray<FileStream> {
   return import('jszip')
-        .then(ZipModule => ZipModule.loadAsync(file))
-        .then(zip =>
-            Object.keys(zip.files)
-                .filter(name => !zip.files[name].dir && !name.startsWith('__MACOSX/') && !name.startsWith('._'))
-                .map(name => {
-                    return pump<FileStream>(zip.files[name].nodeStream(), new FileStream(name));
-                })
+    .then(ZipModule => ZipModule.loadAsync(file))
+    .then(zip =>
+      Object.keys(zip.files)
+        .filter(
+          name =>
+            !zip.files[name].dir &&
+            !name.startsWith('__MACOSX/') &&
+            !name.startsWith('._')
         )
+        .map(name => {
+          return pump<FileStream>(
+            zip.files[name].nodeStream(),
+            new FileStream(name)
+          )
+        })
+    )
 }
