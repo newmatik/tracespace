@@ -26,14 +26,31 @@ module.exports = merge(baseConfig(__dirname), {
   entry: {
     bundle: path.join(__dirname, 'src/index.tsx'),
   },
-  output: {
-    globalObject: 'this',
-  },
+      output: {
+        globalObject: 'this',
+        publicPath: './',
+      },
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.json', '.css'],
     alias: {
       'react-dom': '@hot-loader/react-dom',
     },
+    fallback: {
+      "stream": require.resolve("stream-browserify"),
+      "crypto": require.resolve("crypto-browserify"),
+      "buffer": require.resolve("buffer"),
+      "util": require.resolve("util"),
+      "assert": require.resolve("assert"),
+      "http": require.resolve("stream-http"),
+      "https": require.resolve("https-browserify"),
+      "os": require.resolve("os-browserify/browser"),
+      "url": require.resolve("url"),
+      "zlib": require.resolve("browserify-zlib"),
+      "path": require.resolve("path-browserify"),
+      "fs": false,
+      "net": false,
+      "tls": false
+    }
   },
   module: {
     rules: [
@@ -74,6 +91,8 @@ module.exports = merge(baseConfig(__dirname), {
     new ProvidePlugin({
       React: 'react',
       ReactDOM: 'react-dom',
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
     }),
     new EnvironmentPlugin({
       MIXPANEL_ID: null,
@@ -87,7 +106,7 @@ module.exports = merge(baseConfig(__dirname), {
       onEnd: {archive: [{source: EXAMPLE_FILES, destination: EXAMPLE_OUT}]},
     }),
     new HtmlPlugin({
-      template: path.join(__dirname, 'src/template'),
+      template: path.join(__dirname, 'src/template.html'),
       title: pkg.productName || pkg.name,
       author: pkg.author?.name || 'Newmatik',
       description: pkg.description || '',

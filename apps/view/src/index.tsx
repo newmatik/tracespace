@@ -13,10 +13,10 @@ Promise.all([
     {default: StoreProvider},
   ] = imports
 
-  ReactDom.hydrate(
+  ReactDom.render(
     <StoreProvider>
       <App />
     </StoreProvider>,
-    document.querySelector('[data-hook=root]')
+    document.querySelector('#app')
   )
 })

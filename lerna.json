@@ -1,7 +1,7 @@
 {
   "version": "4.2.8",
   "npmClient": "yarn",
-  "useWorkspaces": true,
+  "packages": ["apps/*", "packages/*"],
   "command": {
     "version": {
       "conventionalCommits": true,

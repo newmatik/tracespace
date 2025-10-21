@@ -36,6 +36,7 @@ const baseConfig = dirname => ({
       new TerserPlugin({
         parallel: true,
         sourceMap: true,
+        extractComments: false,
       }),
       new OptimizeCssAssetsPlugin(),
     ],
